@@ -1,0 +1,46 @@
+# Install packages
+```
+npm i
+```
+
+# Generate tsconfig.json
+```
+npx tsc --init
+```
+
+# Run TypeScript linter:
+```
+npx ts-standard
+```
+
+# Run TypeScript linter with fixing
+```
+npx ts-standard --fix
+```
+
+# Build command:
+```
+npm run build
+```
+
+# Run command:
+```
+npm run start
+```
+
+# Example post query to register user:
+```
+curl http://localhost:5000/api/auth/register \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"username":"ruslan", "password":"test", "email":"ruslanmalovichko@gmail.com", "address":"test", "phone":"test"}'
+```
+
+# Example post query to login user:
+```
+curl http://localhost:5000/api/auth/login \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"username":"ruslan", "password":"test"}'
+```
+
