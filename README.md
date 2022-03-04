@@ -44,3 +44,11 @@ curl http://localhost:5000/api/auth/login \
   -d '{"username":"ruslan", "password":"test"}'
 ```
 
+# Get user
+```
+curl http://localhost:5000/api/user \
+  -X GET \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+```
+

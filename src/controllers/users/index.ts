@@ -86,4 +86,18 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-export { registerUser, loginUser }
+const getUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+    res.status(200).send(res.locals.user);
+    return
+  } catch (error) {
+    // res.status(500).send({ message: error })
+    throw error
+  }
+}
+
+const updateUser = async (req: Request, res: Response): Promise<void> => {
+}
+
+export { registerUser, loginUser, getUser, updateUser }
+
