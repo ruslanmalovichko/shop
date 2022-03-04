@@ -50,5 +50,25 @@ curl http://localhost:5000/api/user \
   -X GET \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+
+curl http://localhost:5000/api/user \
+  -X GET \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM" \
+```
+
+# Update user
+```
+curl http://localhost:5000/api/user \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -d '{"email":"ruslanmalovichko4@gmail.com", "address":"test4", "phone":"test4"}'
+
+curl http://localhost:5000/api/user \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM" \
+  -d '{"email":"ruslanmalovichko3@gmail.com", "address":"test3", "phone":"test3"}'
 ```
 
