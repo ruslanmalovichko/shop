@@ -88,7 +88,7 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
 
 const getUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    res.status(200).send(res.locals.user);
+    res.status(200).send(res.locals.user)
     return
   } catch (error) {
     // res.status(500).send({ message: error })
@@ -103,14 +103,14 @@ const updateUser = async (req: Request, res: Response): Promise<void> => {
     const {
       email,
       address,
-      phone,
-    } = body;
+      phone
+    } = body
 
     const filter = { _id: res.locals.user._id }
 
-    await User.updateMany(filter, {$set: {email: email, address: address, phone: phone}})
+    await User.updateMany(filter, { $set: { email: email, address: address, phone: phone } })
 
-    res.status(200).send({ message: 'User updated' });
+    res.status(200).send({ message: 'User updated' })
   } catch (error) {
     // res.status(500).send({ message: error })
     throw error
@@ -118,4 +118,3 @@ const updateUser = async (req: Request, res: Response): Promise<void> => {
 }
 
 export { registerUser, loginUser, getUser, updateUser }
-

@@ -114,4 +114,3 @@ const productSchema: Schema = new Schema(
 )
 
 export default model<IProduct>('Product', productSchema)
-

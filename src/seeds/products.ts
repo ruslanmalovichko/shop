@@ -2,16 +2,16 @@ import Product from '../models/product'
 import { Response, Request, NextFunction } from 'express'
 import { IProduct } from '../types/product'
 import { readFileSync } from 'fs'
-const products: (Pick<IProduct, 'info' | 'tags'>)[] = JSON.parse(readFileSync(process.cwd() + '/src/seeds/products.json', 'utf-8'))
+const products: Array<Pick<IProduct, 'info' | 'tags'>> = JSON.parse(readFileSync(process.cwd() + '/src/seeds/products.json', 'utf-8'))
 
 const seedProducts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const filter = {}
     const results = await Product.deleteMany(filter)
-    console.log("\n%d Products Deleted.", results.deletedCount)
+    console.log('\n%d Products Deleted.', results.deletedCount)
     const foundProducts: IProduct[] = await Product.find(filter)
-    console.log("\nAfter delete: ");
-    for (let i in foundProducts) {
+    console.log('\nAfter delete: ')
+    for (const i in foundProducts) {
       console.log(foundProducts[i])
     }
     const createdProducts: IProduct[] = await Product.create(products)
@@ -25,4 +25,3 @@ const seedProducts = async (req: Request, res: Response, next: NextFunction): Pr
 }
 
 export { seedProducts }
-

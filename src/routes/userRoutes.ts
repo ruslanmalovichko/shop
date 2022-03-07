@@ -8,4 +8,3 @@ router.get('/', checkToken, getUser)
 router.put('/', checkToken, updateUser)
 
 export default router
-

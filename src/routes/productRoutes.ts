@@ -6,4 +6,3 @@ const router: Router = Router()
 router.get('/import', seedProducts)
 
 export default router
-

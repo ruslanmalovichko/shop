@@ -18,11 +18,10 @@ mongoose
     app.set('json spaces', 2)
     app.use(cors())
     app.use('/api/auth', authRoutes)
-    app.use('/api/user', userRoutes);
-    app.use('/api/product', productRoutes);
+    app.use('/api/user', userRoutes)
+    app.use('/api/product', productRoutes)
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`)
     })
   })
-

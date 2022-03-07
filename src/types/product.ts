@@ -17,7 +17,7 @@ export interface IProduct extends Document {
     color: string
     price: number
     photo: string
-  },
+  }
   tags: {
     priceRange: string
     brand: string
@@ -31,4 +31,3 @@ export interface IProduct extends Document {
     cpu: string
   }
 }
-

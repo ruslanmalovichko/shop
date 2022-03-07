@@ -8,17 +8,16 @@ const PRIVATE_KEY: string = process.env.PRIVATE_KEY || ''
 
 const checkToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const header = req.headers['authorization']
+    const header = req.headers.authorization
 
     if (typeof header !== 'undefined') {
-      const bearer = header.split(' ');
-      const token = bearer[1];
+      const bearer = header.split(' ')
+      const token = bearer[1]
 
       jwt.verify(token, PRIVATE_KEY, async (err, username) => {
-        if (err) {
-          res.sendStatus(403);
-        }
-        else {
+        if (err != null) {
+          res.sendStatus(403)
+        } else {
           const existingUsers: IUser[] = await User.find({ username })
 
           if (existingUsers.length === 0) {
@@ -33,9 +32,8 @@ const checkToken = async (req: Request, res: Response, next: NextFunction): Prom
           next()
         }
       })
-    }
-    else {
-      res.sendStatus(403);
+    } else {
+      res.sendStatus(403)
     }
   } catch (error) {
     // res.status(500).send({ message: error });
@@ -44,4 +42,3 @@ const checkToken = async (req: Request, res: Response, next: NextFunction): Prom
 }
 
 export { checkToken }
-
