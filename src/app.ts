@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import authRoutes from './routes/authRoutes'
 import userRoutes from './routes/userRoutes'
+import productRoutes from './routes/productRoutes'
 import 'dotenv/config'
 
 const app: Express = express()
@@ -14,11 +15,14 @@ mongoose
   .connect(`mongodb://localhost:27017/${DB}`)
   .then(() => {
     app.use(express.json())
+    app.set('json spaces', 2)
     app.use(cors())
     app.use('/api/auth', authRoutes)
     app.use('/api/user', userRoutes);
+    app.use('/api/product', productRoutes);
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`)
     })
   })
+

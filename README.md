@@ -8,7 +8,7 @@ npm i
 npx tsc --init
 ```
 
-# Run TypeScript linter:
+# Run TypeScript linter
 ```
 npx ts-standard
 ```
@@ -18,17 +18,17 @@ npx ts-standard
 npx ts-standard --fix
 ```
 
-# Build command:
+# Build command
 ```
 npm run build
 ```
 
-# Run command:
+# Run command
 ```
 npm run start
 ```
 
-# Example post query to register user:
+# Example post query to register user
 ```
 curl http://localhost:5000/api/auth/register \
   -X POST \
@@ -36,7 +36,7 @@ curl http://localhost:5000/api/auth/register \
   -d '{"username":"ruslan", "password":"test", "email":"ruslanmalovichko@gmail.com", "address":"test", "phone":"test"}'
 ```
 
-# Example post query to login user:
+# Example post query to login user
 ```
 curl http://localhost:5000/api/auth/login \
   -X POST \
@@ -49,12 +49,14 @@ curl http://localhost:5000/api/auth/login \
 curl http://localhost:5000/api/user \
   -X GET \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
+```
 
+```
 curl http://localhost:5000/api/user \
   -X GET \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM"
 ```
 
 # Update user
@@ -64,11 +66,20 @@ curl http://localhost:5000/api/user \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
   -d '{"email":"ruslanmalovichko4@gmail.com", "address":"test4", "phone":"test4"}'
+```
 
+```
 curl http://localhost:5000/api/user \
   -X PUT \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM" \
   -d '{"email":"ruslanmalovichko3@gmail.com", "address":"test3", "phone":"test3"}'
+```
+
+# Import products
+```
+curl http://localhost:5000/api/product/import \
+  -X GET \
+  -H "Content-Type: application/json"
 ```
 
