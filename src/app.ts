@@ -4,6 +4,7 @@ import cors from 'cors'
 import authRoutes from './routes/authRoutes'
 import userRoutes from './routes/userRoutes'
 import productRoutes from './routes/productRoutes'
+import catalogRoutes from './routes/catalogRoutes'
 import 'dotenv/config'
 
 const app: Express = express()
@@ -20,6 +21,7 @@ mongoose
     app.use('/api/auth', authRoutes)
     app.use('/api/user', userRoutes)
     app.use('/api/product', productRoutes)
+    app.use('/api/catalog', catalogRoutes)
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`)

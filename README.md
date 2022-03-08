@@ -83,3 +83,10 @@ curl http://localhost:5000/api/product/import \
   -H "Content-Type: application/json"
 ```
 
+# Get catalog
+```
+curl http://localhost:5000/api/catalog \
+  -X GET \
+  -H "Content-Type: application/json"
+```
+
