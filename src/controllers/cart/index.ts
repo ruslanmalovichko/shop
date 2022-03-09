@@ -63,5 +63,28 @@ const addCart = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-export { addCart }
+const getCart = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user: Pick<ICart, 'user'> = res.locals.user
+    const foundCart: ICart[] = await Cart.find({ user: user }).populate('user').populate('items.product') // render user and items.product
+
+    if (foundCart.length === 1) {
+      res.status(200).send(foundCart[0])
+      return
+    }
+    if (foundCart.length === 0) {
+      res.status(401).send({ message: 'Carts not found' })
+      return
+    }
+    else if (foundCart.length !== 1) {
+      res.status(401).send({ message: 'Multiple carts found' })
+      return
+    }
+  } catch (error) {
+    // res.status(500).send({ message: error })
+    throw error
+  }
+}
+
+export { addCart, getCart }
 
