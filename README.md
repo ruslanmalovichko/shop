@@ -90,3 +90,20 @@ curl http://localhost:5000/api/catalog \
   -H "Content-Type: application/json"
 ```
 
+# Add cart
+```
+curl http://localhost:5000/api/cart \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -d '{"product":"6226752fbd07cf0757fcdcc4","quantity":3}'
+```
+
+```
+curl http://localhost:5000/api/cart \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -d '{"product":"6226752fbd07cf0757fcdcc5","quantity":3}'
+```
+

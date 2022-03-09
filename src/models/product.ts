@@ -1,4 +1,4 @@
-import { IProduct } from './../types/product'
+import { IProduct } from '../types/product'
 import { model, Schema } from 'mongoose'
 
 const options = { collection: 'products', timestamps: true }
