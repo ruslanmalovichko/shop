@@ -132,3 +132,18 @@ curl http://localhost:5000/api/cart \
   -d '{"cartId":"6228bf89f8c201db3e847e3d","itemId":"6228bf89f8c201db3e847e3e"}'
 ```
 
+# Delete cart
+```
+curl http://localhost:5000/api/cart?id=6229e176c5bee2fea8bc2ef9 \
+  -X DELETE \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
+```
+
+```
+curl http://localhost:5000/api/cart?id=6229e176c5bee2fea8bc2ef9 \
+  -X DELETE \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM"
+```
+

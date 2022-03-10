@@ -127,5 +127,25 @@ const changeCart = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-export { addCart, getCart, changeCart }
+const removeCart = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const filter = {
+      _id: req.query.id,
+      user: res.locals.user._id
+    }
+
+    const removedCart = await Cart.deleteMany(filter);
+    if (removedCart.deletedCount) {
+      res.status(200).send({ message: 'Cart has been removed' })
+    }
+    else {
+      res.status(401).send({ message: 'Cart not removed' })
+    }
+  } catch (error) {
+    // res.status(500).send({ message: error })
+    throw error
+  }
+}
+
+export { addCart, getCart, changeCart, removeCart }
 
