@@ -115,3 +115,20 @@ curl http://localhost:5000/api/cart \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
 ```
 
+# Change cart
+```
+curl http://localhost:5000/api/cart \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -d '{"cartId":"6228bf89f8c201db3e847e3d","itemId":"6228bf89f8c201db3e847e3e"}'
+```
+
+```
+curl http://localhost:5000/api/cart \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM" \
+  -d '{"cartId":"6228bf89f8c201db3e847e3d","itemId":"6228bf89f8c201db3e847e3e"}'
+```
+
