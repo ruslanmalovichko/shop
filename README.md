@@ -147,3 +147,12 @@ curl http://localhost:5000/api/cart?id=6229e176c5bee2fea8bc2ef9 \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM"
 ```
 
+# Order a product
+```
+curl http://localhost:5000/api/order \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -d '{"order":[{"name":"HTC U11","price":450,"quantity":2,"dateCreated":1646916454067},{"name":"Apple iPhone X","price":950,"quantity":1,"dateCreated":1646916454067}]}'
+```
+

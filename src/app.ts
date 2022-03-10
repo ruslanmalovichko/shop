@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes'
 import userRoutes from './routes/userRoutes'
 import productRoutes from './routes/productRoutes'
 import catalogRoutes from './routes/catalogRoutes'
+import orderRoutes from './routes/orderRoutes'
 import cartRoutes from './routes/cartRoutes'
 import 'dotenv/config'
 
@@ -24,6 +25,7 @@ mongoose
     app.use('/api/user', userRoutes)
     app.use('/api/product', productRoutes)
     app.use('/api/catalog', catalogRoutes)
+    app.use('/api/order', orderRoutes)
     app.use('/api/cart', cartRoutes)
 
     app.listen(PORT, () => {
