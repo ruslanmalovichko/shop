@@ -16,12 +16,12 @@ const setOrder = async (req: Request, res: Response): Promise<void> => {
     }
 
     req.body.order.forEach(async (order: {
-      name: string,
-      price: number,
-      quantity: number,
+      name: string
+      price: number
+      quantity: number
       dateCreated: number
     }) => {
-      const updatedUser = await User.updateMany(filter, { $push: { 'orders': order }})
+      const updatedUser = await User.updateMany(filter, { $push: { orders: order } })
     })
     res.status(200).send({ message: 'User updated' })
     return

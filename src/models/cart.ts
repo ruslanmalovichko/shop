@@ -7,8 +7,8 @@ const cartSchema: Schema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+      ref: 'User',
+      required: true
     },
     items: [
       {
@@ -28,4 +28,3 @@ const cartSchema: Schema = new Schema(
 )
 
 export default model<ICart>('Cart', cartSchema)
-

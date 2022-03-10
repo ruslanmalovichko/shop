@@ -25,20 +25,18 @@ const addCart = async (req: Request, res: Response): Promise<void> => {
           }
         }
 
-        const updatedCart = await Cart.updateMany(filter, { $inc: { 'items.$.quantity': quantity }})
+        const updatedCart = await Cart.updateMany(filter, { $inc: { 'items.$.quantity': quantity } })
         res.status(200).send(updatedCart)
         return
-      }
-      else {
+      } else {
         const filter = { user: user }
 
         const item: Pick<IItem, 'product' | 'quantity'> = { product: product, quantity: quantity }
-        const updatedCart = await Cart.updateMany(filter, { $push: { 'items': item }})
+        const updatedCart = await Cart.updateMany(filter, { $push: { items: item } })
         res.status(200).send(updatedCart)
         return
       }
-    }
-    else if (foundCart.length === 0) {
+    } else if (foundCart.length === 0) {
       const newCart: ICart = new Cart({
         user: user,
         items: [
@@ -52,8 +50,7 @@ const addCart = async (req: Request, res: Response): Promise<void> => {
       const createdCart: ICart = await newCart.save()
       res.status(200).send(createdCart)
       return
-    }
-    else if (foundCart.length !== 1) {
+    } else if (foundCart.length !== 1) {
       res.status(401).send({ message: 'Multiple carts found' })
       return
     }
@@ -71,12 +68,10 @@ const getCart = async (req: Request, res: Response): Promise<void> => {
     if (foundCart.length === 1) {
       res.status(200).send(foundCart[0])
       return
-    }
-    else if (foundCart.length === 0) {
+    } else if (foundCart.length === 0) {
       res.status(401).send({ message: 'Carts not found' })
       return
-    }
-    else if (foundCart.length !== 1) {
+    } else if (foundCart.length !== 1) {
       res.status(401).send({ message: 'Multiple carts found' })
       return
     }
@@ -95,7 +90,7 @@ const changeCart = async (req: Request, res: Response): Promise<void> => {
 
     const foundCart: ICart[] = await Cart.find(filter)
     if (foundCart.length === 1) {
-      let item: IItem[] = []
+      const item: IItem[] = []
 
       foundCart[0].items.forEach((updateItem) => {
         if (updateItem._id == req.body.itemId) {
@@ -104,20 +99,17 @@ const changeCart = async (req: Request, res: Response): Promise<void> => {
       })
 
       if (item.length === 1) {
-        const updatedCart = await Cart.updateMany(filter, { $pull: { 'items': item[0] }})
+        const updatedCart = await Cart.updateMany(filter, { $pull: { items: item[0] } })
         res.status(200).send(updatedCart)
         return
-      }
-      else {
+      } else {
         res.status(401).send({ message: 'Item not found' })
         return
       }
-    }
-    else if (foundCart.length === 0) {
+    } else if (foundCart.length === 0) {
       res.status(401).send({ message: 'Carts not found' })
       return
-    }
-    else if (foundCart.length !== 1) {
+    } else if (foundCart.length !== 1) {
       res.status(401).send({ message: 'Multiple carts found' })
       return
     }
@@ -134,11 +126,10 @@ const removeCart = async (req: Request, res: Response): Promise<void> => {
       user: res.locals.user._id
     }
 
-    const removedCart = await Cart.deleteMany(filter);
+    const removedCart = await Cart.deleteMany(filter)
     if (removedCart.deletedCount) {
       res.status(200).send({ message: 'Cart has been removed' })
-    }
-    else {
+    } else {
       res.status(401).send({ message: 'Cart not removed' })
     }
   } catch (error) {
@@ -148,4 +139,3 @@ const removeCart = async (req: Request, res: Response): Promise<void> => {
 }
 
 export { addCart, getCart, changeCart, removeCart }
-
