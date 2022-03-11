@@ -156,3 +156,20 @@ curl http://localhost:5000/api/order \
   -d '{"order":[{"name":"HTC U11","price":450,"quantity":2,"dateCreated":1646916454067},{"name":"Apple iPhone X","price":950,"quantity":1,"dateCreated":1646916454067}]}'
 ```
 
+# Order a product with stripe 1
+```
+curl http://localhost:5000/api/order/create-checkout-session \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -d '{"priceId":"price_1KboFCIDiMJHXOSfMZmSRgIu"}'
+```
+
+# Order a product with stripe 2
+```
+curl http://localhost:5000/api/order/checkout-session?session_id=cs_test_a1RmdliBCtgRT2GD03W3hkyY5jY4f3kAfGj307R7kAZYuYsJ1OxDOMGqbu \
+  -X GET \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
+```
+
