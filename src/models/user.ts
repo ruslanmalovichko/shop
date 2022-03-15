@@ -30,10 +30,27 @@ const userSchema: Schema = new Schema(
       type: String,
       required: true
     },
-    orders: {
-      type: [],
-      required: true
-    },
+    orders: [
+      {
+        items: [
+          {
+            product: {
+              type: Schema.Types.ObjectId,
+              ref: 'Product',
+              required: true
+            },
+            quantity: {
+              type: Number,
+              required: true
+            }
+          }
+        ],
+        stripe: {
+          type: Schema.Types.Mixed,
+          required: true
+        }
+      }
+    ],
     token: {
       type: String,
       required: true

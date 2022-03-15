@@ -173,3 +173,13 @@ curl http://localhost:5000/api/order/checkout-session?session_id=cs_test_a1Rmdli
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
 ```
 
+# Order a product with stripe with saving data
+curl http://localhost:5000/api/order \
+```
+curl http://localhost:5000/api/order/checkout-session-save?session_id=cs_test_a1RmdliBCtgRT2GD03W3hkyY5jY4f3kAfGj307R7kAZYuYsJ1OxDOMGqbu \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -d '{"items":[{"product":"6226752fbd07cf0757fcdcc4","quantity":2},{"product":"6226752fbd07cf0757fcdcc5","quantity":1}]}'
+```
+

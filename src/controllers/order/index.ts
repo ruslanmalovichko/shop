@@ -197,5 +197,51 @@ const checkoutSession = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-export { setOrder, createCheckoutSession, checkoutSession }
+const checkoutSessionSave = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const sessionId = req.query.session_id
+
+    const order: {
+      items: [
+        {
+          product: string
+          quantity: number
+        }
+      ],
+      stripe: object
+    } = {
+      items: req.body.items,
+      stripe: {}
+    }
+
+    if (typeof sessionId !== 'string') {
+      res.status(500).send({ message: 'No session ID' })
+      return
+    }
+
+    order.stripe = await stripe.checkout.sessions.retrieve(sessionId);
+
+    const filter = { _id: res.locals.user._id }
+    const existingUsers: IUser[] = await User.find(filter)
+
+    if (existingUsers.length === 0) {
+      res.status(401).send({ message: 'No user found' })
+      return
+    } else if (existingUsers.length !== 1) {
+      res.status(401).send({ message: 'Multiple users found' })
+      return
+    }
+
+    const updatedUser = await User.updateMany(filter, { $push: { orders: order } })
+
+    res.status(200).send({ message: 'User updated' })
+    return
+  } catch (error) {
+    // res.status(500).send({ message: error })
+    // res.status(400).send({ error: { message: e.message } })
+    throw error
+  }
+}
+
+export { setOrder, createCheckoutSession, checkoutSession, checkoutSessionSave }
 
