@@ -17,6 +17,8 @@ export interface IProduct extends Document {
     color: string
     price: number
     photo: string
+    product_id: string
+    price_id: string
   }
   tags: {
     priceRange: string

@@ -8,7 +8,8 @@ const productSchema: Schema = new Schema(
     info: {
       name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
       },
       dimensions: {
         type: String,
@@ -63,6 +64,14 @@ const productSchema: Schema = new Schema(
         required: true
       },
       photo: {
+        type: String,
+        required: true
+      },
+      product_id: {
+        type: String,
+        required: true
+      },
+      price_id: {
         type: String,
         required: true
       }
