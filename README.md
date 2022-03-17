@@ -115,21 +115,21 @@ curl http://localhost:5000/api/cart \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
 ```
 
-# Change cart
+# Change cart with stripe block
 ```
 curl http://localhost:5000/api/cart \
   -X PUT \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
-  -d '{"cartId":"6228bf89f8c201db3e847e3d","itemId":"6228bf89f8c201db3e847e3e"}'
+  -d '{"cartId":"6232fee1e054ac953f9f35ae","itemId":"6232fee1e054ac953f9f35af"}'
 ```
 
 ```
 curl http://localhost:5000/api/cart \
   -X PUT \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM" \
-  -d '{"cartId":"6228bf89f8c201db3e847e3d","itemId":"6228bf89f8c201db3e847e3e"}'
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -d '{"cartId":"6232fee1e054ac953f9f35ae","itemId":"62330010612faadb5321a3f7"}'
 ```
 
 # Delete cart

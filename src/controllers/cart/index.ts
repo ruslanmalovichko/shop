@@ -94,7 +94,13 @@ const changeCart = async (req: Request, res: Response): Promise<void> => {
     }
 
     const foundCart: ICart[] = await Cart.find(filter)
+
     if (foundCart.length === 1) {
+      if (foundCart[0].session_id) {
+        res.status(401).send({ message: 'Payment is in progress' })
+        return
+      }
+
       const item: IItem[] = []
 
       foundCart[0].items.forEach((updateItem) => {
@@ -107,8 +113,11 @@ const changeCart = async (req: Request, res: Response): Promise<void> => {
         const updatedCart = await Cart.updateMany(filter, { $pull: { items: item[0] } })
         res.status(200).send(updatedCart)
         return
-      } else {
-        res.status(401).send({ message: 'Item not found' })
+      } else if (item.length === 0) {
+        res.status(401).send({ message: 'Items not found' })
+        return
+      } else if (item.length !== 1) {
+        res.status(401).send({ message: 'Multiple items found' })
         return
       }
     } else if (foundCart.length === 0) {
