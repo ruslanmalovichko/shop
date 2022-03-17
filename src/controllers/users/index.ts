@@ -42,7 +42,8 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
       return
     }
 
-    res.status(200).send({ ...existingUsers[0].toJSON() })
+    // res.status(200).send({ ...existingUsers[0].toJSON() })
+    res.status(200).send({ token: existingUsers[0].token })
     return
   } catch (error) {
     // res.status(500).send({ message: error });

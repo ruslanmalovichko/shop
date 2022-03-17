@@ -36,12 +36,12 @@ curl http://localhost:5000/api/auth/register \
   -d '{"password":"test","name":"ruslan","email":"ruslanmalovichko@gmail.com","address":{"city":"Kyiv","country":"UA","line1":"test"},"phone":"test"}'
 ```
 
-# Example post query to login user
+# Login user
 ```
 curl http://localhost:5000/api/auth/login \
   -X POST \
   -H "Content-Type: application/json" \
-  -d '{"username":"ruslan", "password":"test"}'
+  -d '{"name":"ruslan", "password":"test"}'
 ```
 
 # Get user
