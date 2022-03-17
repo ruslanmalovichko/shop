@@ -114,18 +114,29 @@ const getUser = async (req: Request, res: Response): Promise<void> => {
 
 const updateUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const body = req.body as Pick<IUser, 'email' | 'address' | 'phone'>
+    const body = req.body as Pick<IUser, 'name' | 'email' | 'address' | 'phone'>
 
     const {
+      name,
       email,
       address,
       phone
     } = body
 
+    const customer = await stripe.customers.update(
+      res.locals.user.customer_id,
+      {
+        name,
+        email,
+        address,
+        phone
+      }
+    )
+    console.log('customer')
+    console.log(customer)
+
     const filter = { _id: res.locals.user._id }
-
-    await User.updateMany(filter, { $set: { email: email, address: address, phone: phone } })
-
+    await User.updateMany(filter, { $set: { name, email, address, phone } })
     res.status(200).send({ message: 'User updated' })
   } catch (error) {
     // res.status(500).send({ message: error })
