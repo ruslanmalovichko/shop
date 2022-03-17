@@ -49,31 +49,31 @@ curl http://localhost:5000/api/auth/login \
 curl http://localhost:5000/api/user \
   -X GET \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
+  -H "Authorization: Bearer [TOKEN]"
 ```
 
 ```
 curl http://localhost:5000/api/user \
   -X GET \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
 ```
 
-# Update user
+# Update user with stripe
+```
+curl http://localhost:5000/api/user \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer [TOKEN]" \
+  -d '{"name":"ruslan","email":"ruslanmalovichko@gmail.com","address":{"city":"Kyiv","country":"UA","line1":"test"},"phone":"test"}'
+```
+
 ```
 curl http://localhost:5000/api/user \
   -X PUT \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
-  -d '{"email":"ruslanmalovichko4@gmail.com", "address":"test4", "phone":"test4"}'
-```
-
-```
-curl http://localhost:5000/api/user \
-  -X PUT \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM" \
-  -d '{"email":"ruslanmalovichko3@gmail.com", "address":"test3", "phone":"test3"}'
+  -d '{"name":"ruslan","email":"ruslanmalovichko@gmail.com","address":{"city":"Kyiv","country":"UA","line1":"test"},"phone":"test"}'
 ```
 
 # Import products
