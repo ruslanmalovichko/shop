@@ -4,7 +4,7 @@ import User from '../../models/user'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
-import Stripe from 'stripe';
+import Stripe from 'stripe'
 
 const STRIPE_SECRET_KEY: string = process.env.STRIPE_SECRET_KEY || ''
 const PRIVATE_KEY: string = process.env.PRIVATE_KEY || ''
@@ -12,7 +12,7 @@ const PRIVATE_KEY: string = process.env.PRIVATE_KEY || ''
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2020-08-27',
   typescript: true
-});
+})
 
 const generateToken = (data: string) => {
   return jwt.sign(data, PRIVATE_KEY)

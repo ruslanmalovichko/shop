@@ -8,31 +8,31 @@ import Cart from '../../models/cart'
 import { IOrder } from '../../types/order'
 
 import 'dotenv/config'
-import Stripe from 'stripe';
+import Stripe from 'stripe'
 
 const STRIPE_SECRET_KEY: string = process.env.STRIPE_SECRET_KEY || ''
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2020-08-27',
   typescript: true
-});
+})
 
 const createCheckoutSession = async (req: Request, res: Response): Promise<void> => {
   try {
     const user: IUser = res.locals.user
-    const domainURL = process.env.DOMAIN;
+    const domainURL = process.env.DOMAIN
 
     const filter = {
       _id: req.query.id,
       user: user._id.toString()
     }
 
-    if (typeof filter._id != 'string') {
+    if (typeof filter._id !== 'string') {
       res.status(401).send({ message: 'Wrong Cart id type' })
       return
     }
 
-    if (typeof filter.user != 'string') {
+    if (typeof filter.user !== 'string') {
       res.status(401).send({ message: 'Wrong User id type' })
       return
     }
@@ -52,7 +52,7 @@ const createCheckoutSession = async (req: Request, res: Response): Promise<void>
       stripe: {}
     }
 
-    let line_items = []
+    const line_items = []
 
     for await (const item of order.items) {
       const foundProducts: IProduct[] = await Product.find({ _id: item.product })
@@ -78,8 +78,8 @@ const createCheckoutSession = async (req: Request, res: Response): Promise<void>
       cancel_url: `${domainURL}/canceled`, // TO DO: Research canceled
       customer: user.customer_id,
       metadata: {
-        'user_id': filter.user,
-        'cart_id': filter._id
+        user_id: filter.user,
+        cart_id: filter._id
       }
     })
 
@@ -109,7 +109,7 @@ const checkoutSessionSave = async (req: Request, res: Response): Promise<void> =
     console.log('stripeSession.status')
     console.log(stripeSession.status)
 
-    if ('complete' != stripeSession.status) {
+    if (stripeSession.status != 'complete') {
       res.status(401).send({ message: 'Stripe status is not complete' })
       return
     }
@@ -118,7 +118,7 @@ const checkoutSessionSave = async (req: Request, res: Response): Promise<void> =
     console.log('metadata')
     console.log(metadata)
 
-    if (!(metadata && metadata.cart_id && metadata.user_id)) {
+    if (!((metadata != null) && metadata.cart_id && metadata.user_id)) {
       res.status(401).send({ message: 'Wrong stripe metadata' })
       return
     }
@@ -177,4 +177,3 @@ const checkoutSessionSave = async (req: Request, res: Response): Promise<void> =
 }
 
 export { createCheckoutSession, checkoutSessionSave }
-
