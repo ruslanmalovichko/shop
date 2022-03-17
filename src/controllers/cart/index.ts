@@ -15,6 +15,11 @@ const addCart = async (req: Request, res: Response): Promise<void> => {
     const foundCart: ICart[] = await Cart.find({ user: user })
 
     if (foundCart.length === 1) {
+      if (foundCart[0].session_id) {
+        res.status(401).send({ message: 'Payment is in progress' })
+        return
+      }
+
       const products: string[] = foundCart[0].items.map((item): string => item.product.toString())
 
       if (products.includes(product)) {
@@ -31,7 +36,7 @@ const addCart = async (req: Request, res: Response): Promise<void> => {
       } else {
         const filter = { user: user }
 
-        const item: Pick<IItem, 'product' | 'quantity'> = { product: product, quantity: quantity }
+        const item: Pick<IItem, 'product' | 'quantity'> = { product, quantity }
         const updatedCart = await Cart.updateMany(filter, { $push: { items: item } })
         res.status(200).send(updatedCart)
         return

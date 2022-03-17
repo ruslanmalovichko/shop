@@ -90,13 +90,13 @@ curl http://localhost:5000/api/catalog \
   -H "Content-Type: application/json"
 ```
 
-# Add cart
+# Add cart with stripe block
 ```
 curl http://localhost:5000/api/cart \
   -X POST \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
-  -d '{"product":"6226752fbd07cf0757fcdcc4","quantity":3}'
+  -d '{"product":"6231ad75c8f2d0977937eb62","quantity":2}'
 ```
 
 ```
@@ -104,7 +104,7 @@ curl http://localhost:5000/api/cart \
   -X POST \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
-  -d '{"product":"6226752fbd07cf0757fcdcc5","quantity":3}'
+  -d '{"product":"6231ad76c8f2d0977937eb65","quantity":3}'
 ```
 
 # Get cart

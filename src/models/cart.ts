@@ -22,7 +22,10 @@ const cartSchema: Schema = new Schema(
           required: true
         }
       }
-    ]
+    ],
+    session_id: {
+      type: String
+    }
   },
   options
 )

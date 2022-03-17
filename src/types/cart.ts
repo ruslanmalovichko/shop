@@ -6,4 +6,5 @@ export interface ICart extends Document {
   items: [
     IItem
   ]
+  session_id: string
 }
