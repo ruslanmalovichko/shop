@@ -1,7 +1,6 @@
-import { Document } from 'mongoose'
 import { IItem } from './item'
 
-export interface IOrder extends Document {
+export interface IOrder {
   items: [
     IItem
   ],

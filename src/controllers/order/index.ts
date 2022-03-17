@@ -1,6 +1,12 @@
 import { Response, Request } from 'express'
 import { IUser } from './../../types/user'
 import User from '../../models/user'
+import { IProduct } from '../../types/product'
+import Product from '../../models/product'
+import { ICart } from '../../types/cart'
+import Cart from '../../models/cart'
+import { IOrder } from '../../types/order'
+
 import 'dotenv/config'
 import Stripe from 'stripe';
 
@@ -10,6 +16,69 @@ const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2020-08-27',
   typescript: true
 });
+
+const createCheckoutSession = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user: IUser = res.locals.user
+    const domainURL = process.env.DOMAIN;
+
+    const filter = {
+      _id: req.query.id,
+      user: user._id
+    }
+
+    const foundCart: ICart[] = await Cart.find(filter)
+
+    if (foundCart.length === 0) {
+      res.status(401).send({ message: 'Carts not found' })
+      return
+    } else if (foundCart.length !== 1) {
+      res.status(401).send({ message: 'Multiple carts found' })
+      return
+    }
+
+    const order: IOrder = {
+      items: foundCart[0].items,
+      stripe: {}
+    }
+
+    let line_items = []
+
+    for await (const item of order.items) {
+      const foundProducts: IProduct[] = await Product.find({ _id: item.product })
+
+      if (foundProducts.length === 0) {
+        res.status(401).send({ message: 'No products found' })
+        return
+      } else if (foundProducts.length !== 1) {
+        res.status(401).send({ message: 'Multiple products found' })
+        return
+      }
+
+      line_items.push({
+        price: foundProducts[0].info.price_id,
+        quantity: item.quantity
+      })
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      mode: 'payment',
+      line_items,
+      success_url: `${domainURL}/api/order/checkout-session?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${domainURL}/canceled`, // TO DO: Research canceled
+      customer: user.customer_id
+    })
+
+    const updatedCart = await Cart.updateMany(filter, { $set: { session_id: session.id } })
+
+    res.status(200).send({ message: session.url })
+    return
+  } catch (error) {
+    // res.status(500).send({ message: error })
+    // res.status(400).send({ error: { message: e.message } })
+    throw error
+  }
+}
 
 const setOrder = async (req: Request, res: Response): Promise<void> => {
   try {
