@@ -140,6 +140,15 @@ const removeCart = async (req: Request, res: Response): Promise<void> => {
       user: res.locals.user._id
     }
 
+    const foundCart: ICart[] = await Cart.find(filter)
+
+    if (foundCart.length === 1) {
+      if (foundCart[0].session_id) {
+        res.status(401).send({ message: 'Payment is in progress' })
+        return
+      }
+    }
+
     const removedCart = await Cart.deleteMany(filter)
     if (removedCart.deletedCount) {
       res.status(200).send({ message: 'Cart has been removed' })
