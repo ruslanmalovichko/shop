@@ -148,30 +148,10 @@ curl http://localhost:5000/api/order/create-checkout-session?id=6233245f3802f6c6
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
 ```
 
-# Order a product with stripe 1
+# Checkout stripe session with saving data
 ```
-curl http://localhost:5000/api/order/create-checkout-session \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
-  -d '{"priceId":"price_1KboFCIDiMJHXOSfMZmSRgIu"}'
-```
-
-# Order a product with stripe 2
-```
-curl http://localhost:5000/api/order/checkout-session?session_id=cs_test_a1RmdliBCtgRT2GD03W3hkyY5jY4f3kAfGj307R7kAZYuYsJ1OxDOMGqbu \
+curl http://localhost:5000/api/order/checkout-session-save?session_id=cs_test_b1VbsEuQUosBWEHzTXpZgydzBKyANgC5S5Q0U8TfNgGh0sJzIIEy0Z9Gdi \
   -X GET \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
-```
-
-# Order a product with stripe with saving data
-curl http://localhost:5000/api/order \
-```
-curl http://localhost:5000/api/order/checkout-session-save?session_id=cs_test_a1RmdliBCtgRT2GD03W3hkyY5jY4f3kAfGj307R7kAZYuYsJ1OxDOMGqbu \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
-  -d '{"items":[{"product":"6226752fbd07cf0757fcdcc4","quantity":2},{"product":"6226752fbd07cf0757fcdcc5","quantity":1}]}'
+  -H "Content-Type: application/json"
 ```
 
