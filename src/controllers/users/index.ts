@@ -4,8 +4,15 @@ import User from '../../models/user'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
+import Stripe from 'stripe';
 
+const STRIPE_SECRET_KEY: string = process.env.STRIPE_SECRET_KEY || ''
 const PRIVATE_KEY: string = process.env.PRIVATE_KEY || ''
+
+const stripe = new Stripe(STRIPE_SECRET_KEY, {
+  apiVersion: '2020-08-27',
+  typescript: true
+});
 
 const generateToken = (data: string) => {
   return jwt.sign(data, PRIVATE_KEY)
@@ -13,12 +20,12 @@ const generateToken = (data: string) => {
 
 const loginUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const body = req.body as Pick<IUser, 'username' | 'password'>
+    const body = req.body as Pick<IUser, 'name' | 'password'>
     const {
-      username, password
+      name, password
     } = body
 
-    const existingUsers: IUser[] = await User.find({ username })
+    const existingUsers: IUser[] = await User.find({ name })
 
     if (existingUsers.length === 0) {
       res.status(401).send({ message: 'No user found' })
@@ -45,17 +52,17 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
 
 const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const body = req.body as Pick<IUser, 'username' | 'password' | 'email' | 'address' | 'phone'>
+    const body = req.body as Pick<IUser, 'password' | 'name' | 'email' | 'address' | 'phone'>
 
     const {
-      username,
       password,
+      name,
       email,
       address,
       phone
     } = body
 
-    const existingUsers: IUser[] = await User.find({ username })
+    const existingUsers: IUser[] = await User.find({ name })
 
     if (existingUsers.length !== 0) {
       res.status(409).send({ message: 'User already exists' })
@@ -65,15 +72,23 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
     const salt = await bcrypt.genSalt()
     const hash = await bcrypt.hash(password, salt)
 
-    const token = generateToken(username)
+    const token = generateToken(name)
 
-    const newUserData: Pick<IUser, 'username' | 'password' | 'email' | 'address' | 'phone' | 'token'> = {
-      username,
-      password: hash,
+    const customer = await stripe.customers.create({
+      name,
       email,
       address,
-      phone,
-      token
+      phone
+    })
+
+    const newUserData: Pick<IUser, 'password' | 'token' | 'customer_id' | 'name' | 'email' | 'address' | 'phone'> = {
+      password: hash,
+      token,
+      customer_id: customer.id,
+      name,
+      email,
+      address,
+      phone
     }
 
     const newUser: IUser = new User(newUserData)

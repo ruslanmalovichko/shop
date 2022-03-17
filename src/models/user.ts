@@ -9,25 +9,7 @@ const options = { collection: 'users', timestamps: true }
 
 const userSchema: Schema = new Schema(
   {
-    username: {
-      type: String,
-      required: true
-    },
     password: {
-      type: String,
-      required: true
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      validate: [validateEmail, 'invalid email']
-    },
-    address: {
-      type: String,
-      required: true
-    },
-    phone: {
       type: String,
       required: true
     },
@@ -53,6 +35,41 @@ const userSchema: Schema = new Schema(
       }
     ],
     token: {
+      type: String,
+      required: true
+    },
+    customer_id: {
+      type: String,
+      required: true
+    },
+
+    // With stripe
+    name: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: [validateEmail, 'invalid email']
+    },
+    address: {
+      city: {
+        type: String,
+        required: true
+      },
+      country: {
+        type: String,
+        required: true
+      },
+      line1: {
+        type: String,
+        required: true
+      }
+    },
+    phone: {
       type: String,
       required: true
     }

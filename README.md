@@ -28,12 +28,12 @@ npm run build
 npm run start
 ```
 
-# Example post query to register user
+# Register user with stripe
 ```
 curl http://localhost:5000/api/auth/register \
   -X POST \
   -H "Content-Type: application/json" \
-  -d '{"username":"ruslan", "password":"test", "email":"ruslanmalovichko@gmail.com", "address":"test", "phone":"test"}'
+  -d '{"password":"test","name":"ruslan","email":"ruslanmalovichko@gmail.com","address":{"city":"Kyiv","country":"UA","line1":"test"},"phone":"test"}'
 ```
 
 # Example post query to login user
