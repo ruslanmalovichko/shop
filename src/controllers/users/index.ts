@@ -6,16 +6,22 @@ import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 import Stripe from 'stripe'
 
-const STRIPE_SECRET_KEY: string = process.env.STRIPE_SECRET_KEY || ''
-const PRIVATE_KEY: string = process.env.PRIVATE_KEY || ''
+const PRIVATE_KEY = process.env.PRIVATE_KEY
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY
+let stripe: Stripe
 
-const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2020-08-27',
-  typescript: true
-})
+if (typeof STRIPE_SECRET_KEY === 'string') {
+  stripe = new Stripe(STRIPE_SECRET_KEY, {
+    apiVersion: '2020-08-27',
+    typescript: true
+  })
+}
 
-const generateToken = (data: string) => {
-  return jwt.sign(data, PRIVATE_KEY)
+let generateToken: Function
+if (typeof PRIVATE_KEY === 'string') {
+  generateToken = (data: string) => {
+    return jwt.sign(data, PRIVATE_KEY)
+  }
 }
 
 const loginUser = async (req: Request, res: Response): Promise<void> => {

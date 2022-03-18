@@ -5,12 +5,15 @@ import { readFileSync } from 'fs'
 import 'dotenv/config'
 import Stripe from 'stripe'
 
-const STRIPE_SECRET_KEY: string = process.env.STRIPE_SECRET_KEY || ''
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY
+let stripe: Stripe
 
-const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2020-08-27',
-  typescript: true
-})
+if (typeof STRIPE_SECRET_KEY === 'string') {
+  stripe = new Stripe(STRIPE_SECRET_KEY, {
+    apiVersion: '2020-08-27',
+    typescript: true
+  })
+}
 
 const products: Array<Pick<IProduct, 'info' | 'tags'>> = JSON.parse(readFileSync(process.cwd() + '/src/seeds/products.json', 'utf-8'))
 
@@ -28,7 +31,7 @@ const seedProducts = async (req: Request, res: Response, next: NextFunction): Pr
           return
         }
 
-        const updatedProduct = await Product.updateMany(filter, { $set: product })
+        await Product.updateMany(filter, { $set: product })
 
         console.log('Updated product')
         console.log(product.info.name)
@@ -60,6 +63,7 @@ const seedProducts = async (req: Request, res: Response, next: NextFunction): Pr
     return
   } catch (error) {
     // res.status(500).send({ message: error });
+    console.log(error)
     throw error
   }
 }

@@ -1,7 +1,7 @@
 import { IUser } from '../types/user'
 import { model, Schema } from 'mongoose'
 
-const validateEmail = function (email: string) {
+const validateEmail = function (email: string): boolean {
   const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   return re.test(email)
 }
