@@ -10,17 +10,25 @@ import { IOrder } from '../../types/order'
 import 'dotenv/config'
 import Stripe from 'stripe'
 
-const STRIPE_SECRET_KEY: string = process.env.STRIPE_SECRET_KEY || ''
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY
+let stripe: Stripe
 
-const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2020-08-27',
-  typescript: true
-})
+if (typeof STRIPE_SECRET_KEY === 'string') {
+  stripe = new Stripe(STRIPE_SECRET_KEY, {
+    apiVersion: '2020-08-27',
+    typescript: true
+  })
+}
 
 const createCheckoutSession = async (req: Request, res: Response): Promise<void> => {
   try {
     const user: IUser = res.locals.user
     const domainURL = process.env.DOMAIN
+
+    if (typeof domainURL !== 'string') {
+      res.status(401).send({ message: 'Wrong domainURL type' })
+      return
+    }
 
     const filter = {
       _id: req.query.id,
@@ -52,7 +60,7 @@ const createCheckoutSession = async (req: Request, res: Response): Promise<void>
       stripe: {}
     }
 
-    const line_items = []
+    const lineItems = []
 
     for await (const item of order.items) {
       const foundProducts: IProduct[] = await Product.find({ _id: item.product })
@@ -65,7 +73,7 @@ const createCheckoutSession = async (req: Request, res: Response): Promise<void>
         return
       }
 
-      line_items.push({
+      lineItems.push({
         price: foundProducts[0].info.price_id,
         quantity: item.quantity
       })
@@ -73,7 +81,7 @@ const createCheckoutSession = async (req: Request, res: Response): Promise<void>
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      line_items,
+      line_items: lineItems,
       success_url: `${domainURL}/api/order/checkout-session-save?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${domainURL}/canceled`, // TO DO: Research canceled
       customer: user.customer_id,
@@ -83,13 +91,14 @@ const createCheckoutSession = async (req: Request, res: Response): Promise<void>
       }
     })
 
-    const updatedCart = await Cart.updateMany(filter, { $set: { session_id: session.id } })
+    await Cart.updateMany(filter, { $set: { session_id: session.id } })
 
     res.status(200).send({ message: session.url })
     return
   } catch (error) {
     // res.status(500).send({ message: error })
     // res.status(400).send({ error: { message: e.message } })
+    console.log(error)
     throw error
   }
 }
@@ -109,7 +118,7 @@ const checkoutSessionSave = async (req: Request, res: Response): Promise<void> =
     console.log('stripeSession.status')
     console.log(stripeSession.status)
 
-    if (stripeSession.status != 'complete') {
+    if (stripeSession.status !== 'complete') {
       res.status(401).send({ message: 'Stripe status is not complete' })
       return
     }
@@ -118,15 +127,19 @@ const checkoutSessionSave = async (req: Request, res: Response): Promise<void> =
     console.log('metadata')
     console.log(metadata)
 
-    if (!((metadata != null) && metadata.cart_id && metadata.user_id)) {
+    if (metadata == null) {
       res.status(401).send({ message: 'Wrong stripe metadata' })
       return
     }
 
-    console.log('stripeSession')
-    if (metadata && metadata.cart_id) {
-      console.log('metadata.cart_id')
-      console.log(metadata.cart_id)
+    if (metadata.cart_id == null) {
+      res.status(401).send({ message: 'Wrong stripe metadata' })
+      return
+    }
+
+    if (metadata.user_id == null) {
+      res.status(401).send({ message: 'Wrong stripe metadata' })
+      return
     }
 
     const filterUser = { _id: metadata.user_id }
@@ -164,14 +177,15 @@ const checkoutSessionSave = async (req: Request, res: Response): Promise<void> =
 
     console.log(order)
 
-    const updatedUser = await User.updateMany(filterUser, { $push: { orders: order } })
-    const removedCart = await Cart.deleteMany(filterCart)
+    await User.updateMany(filterUser, { $push: { orders: order } })
+    await Cart.deleteMany(filterCart)
 
     res.status(200).send({ message: 'User updated' })
     return
   } catch (error) {
     // res.status(500).send({ message: error })
     // res.status(400).send({ error: { message: e.message } })
+    console.log(error)
     throw error
   }
 }

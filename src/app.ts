@@ -1,5 +1,4 @@
 import express, { Express } from 'express'
-import mongoose from 'mongoose'
 import cors from 'cors'
 import authRoutes from './routes/authRoutes'
 import userRoutes from './routes/userRoutes'
@@ -9,26 +8,35 @@ import orderRoutes from './routes/orderRoutes'
 import cartRoutes from './routes/cartRoutes'
 import 'dotenv/config'
 
+import { connect } from 'mongoose'
+
 const app: Express = express()
 
 const PORT = process.env.PORT
 const DB = process.env.DB
 
-mongoose
-  .connect(`mongodb://localhost:27017/${DB}`)
-  .then(() => {
-    app.use(express.json())
-    app.set('json spaces', 2)
-    app.use(cors())
+run().catch(err => console.log(err))
 
-    app.use('/api/auth', authRoutes)
-    app.use('/api/user', userRoutes)
-    app.use('/api/product', productRoutes)
-    app.use('/api/catalog', catalogRoutes)
-    app.use('/api/order', orderRoutes)
-    app.use('/api/cart', cartRoutes)
+async function run (): Promise<void> {
+  if (!(typeof DB === 'string' && typeof PORT === 'string')) {
+    console.log('Env variables are wrong')
+    return
+  }
 
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`)
-    })
+  await connect(`mongodb://localhost:27017/${DB}`)
+
+  app.use(express.json())
+  app.set('json spaces', 2)
+  app.use(cors())
+
+  app.use('/api/auth', authRoutes)
+  app.use('/api/user', userRoutes)
+  app.use('/api/product', productRoutes)
+  app.use('/api/catalog', catalogRoutes)
+  app.use('/api/order', orderRoutes)
+  app.use('/api/cart', cartRoutes)
+
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`)
   })
+}

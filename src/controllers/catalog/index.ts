@@ -11,6 +11,7 @@ const getCatalog = async (req: Request, res: Response): Promise<void> => {
     return
   } catch (error) {
     // res.status(500).send({ message: error })
+    console.log(error)
     throw error
   }
 }

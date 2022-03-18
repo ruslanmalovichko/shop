@@ -15,7 +15,7 @@ const addCart = async (req: Request, res: Response): Promise<void> => {
     const foundCart: ICart[] = await Cart.find({ user: user })
 
     if (foundCart.length === 1) {
-      if (foundCart[0].session_id) {
+      if (foundCart[0].session_id != null) {
         res.status(401).send({ message: 'Payment is in progress' })
         return
       }
@@ -61,6 +61,7 @@ const addCart = async (req: Request, res: Response): Promise<void> => {
     }
   } catch (error) {
     // res.status(500).send({ message: error })
+    console.log(error)
     throw error
   }
 }
@@ -82,6 +83,7 @@ const getCart = async (req: Request, res: Response): Promise<void> => {
     }
   } catch (error) {
     // res.status(500).send({ message: error })
+    console.log(error)
     throw error
   }
 }
@@ -96,7 +98,7 @@ const changeCart = async (req: Request, res: Response): Promise<void> => {
     const foundCart: ICart[] = await Cart.find(filter)
 
     if (foundCart.length === 1) {
-      if (foundCart[0].session_id) {
+      if (foundCart[0].session_id != null) {
         res.status(401).send({ message: 'Payment is in progress' })
         return
       }
@@ -104,7 +106,7 @@ const changeCart = async (req: Request, res: Response): Promise<void> => {
       const item: IItem[] = []
 
       foundCart[0].items.forEach((updateItem) => {
-        if (updateItem._id == req.body.itemId) {
+        if (updateItem._id.toString() === req.body.itemId) {
           item.push(updateItem)
         }
       })
@@ -129,6 +131,7 @@ const changeCart = async (req: Request, res: Response): Promise<void> => {
     }
   } catch (error) {
     // res.status(500).send({ message: error })
+    console.log(error)
     throw error
   }
 }
@@ -143,20 +146,22 @@ const removeCart = async (req: Request, res: Response): Promise<void> => {
     const foundCart: ICart[] = await Cart.find(filter)
 
     if (foundCart.length === 1) {
-      if (foundCart[0].session_id) {
+      if (foundCart[0].session_id != null) {
         res.status(401).send({ message: 'Payment is in progress' })
         return
       }
     }
 
     const removedCart = await Cart.deleteMany(filter)
-    if (removedCart.deletedCount) {
+
+    if (removedCart.deletedCount != null && removedCart.deletedCount !== 0) {
       res.status(200).send({ message: 'Cart has been removed' })
     } else {
       res.status(401).send({ message: 'Cart not removed' })
     }
   } catch (error) {
     // res.status(500).send({ message: error })
+    console.log(error)
     throw error
   }
 }

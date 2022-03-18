@@ -47,6 +47,7 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
     return
   } catch (error) {
     // res.status(500).send({ message: error });
+    console.log(error)
     throw error
   }
 }
@@ -98,6 +99,7 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
     res.status(201).send({ ...createdUser.toJSON() })
   } catch (error) {
     // res.status(500).send({ message: error })
+    console.log(error)
     throw error
   }
 }
@@ -108,6 +110,7 @@ const getUser = async (req: Request, res: Response): Promise<void> => {
     return
   } catch (error) {
     // res.status(500).send({ message: error })
+    console.log(error)
     throw error
   }
 }
@@ -140,6 +143,7 @@ const updateUser = async (req: Request, res: Response): Promise<void> => {
     res.status(200).send({ message: 'User updated' })
   } catch (error) {
     // res.status(500).send({ message: error })
+    console.log(error)
     throw error
   }
 }

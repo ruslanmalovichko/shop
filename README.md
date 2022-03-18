@@ -121,7 +121,7 @@ curl http://localhost:5000/api/cart \
   -X PUT \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
-  -d '{"cartId":"6232fee1e054ac953f9f35ae","itemId":"6232fee1e054ac953f9f35af"}'
+  -d '{"cartId":"6234427ad664b3d7e132ea11","itemId":"62344374744c648cf68b110a"}'
 ```
 
 ```
