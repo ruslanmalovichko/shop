@@ -145,7 +145,7 @@ curl http://localhost:5000/api/cart?id=6232fee1e054ac953f9f35ae \
 curl http://localhost:5000/api/order/create-checkout-session?id=6233245f3802f6c6adbc4b84 \
   -X POST \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
 ```
 
 # Checkout stripe session with saving data
@@ -153,5 +153,13 @@ curl http://localhost:5000/api/order/create-checkout-session?id=6233245f3802f6c6
 curl http://localhost:5000/api/order/checkout-session-save?session_id=cs_test_b1VbsEuQUosBWEHzTXpZgydzBKyANgC5S5Q0U8TfNgGh0sJzIIEy0Z9Gdi \
   -X GET \
   -H "Content-Type: application/json"
+```
+
+# API form contact
+```
+curl http://localhost:5000/api/form/contact \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Ruslan Malovichko","email": "ruslanmalovichko@gmail.com", "message": "Test message"}'
 ```
 

@@ -6,6 +6,7 @@ import productRoutes from './routes/productRoutes'
 import catalogRoutes from './routes/catalogRoutes'
 import orderRoutes from './routes/orderRoutes'
 import cartRoutes from './routes/cartRoutes'
+import formRoutes from './routes/formRoutes'
 import 'dotenv/config'
 
 import { connect } from 'mongoose'
@@ -35,6 +36,7 @@ async function run (): Promise<void> {
   app.use('/api/catalog', catalogRoutes)
   app.use('/api/order', orderRoutes)
   app.use('/api/cart', cartRoutes)
+  app.use('/api/form', formRoutes)
 
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
