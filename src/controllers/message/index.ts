@@ -5,22 +5,22 @@ import Message from '../../models/message'
 import { IUser } from '../../types/user'
 import { IConversation } from '../../types/conversation'
 
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const message = async (req: Request, res: Response): Promise<void> => {
   try {
     const user: IUser = res.locals.user
 
-    let from = mongoose.Types.ObjectId(user._id)
-    let to = mongoose.Types.ObjectId(req.body.to)
+    const from = mongoose.Types.ObjectId(user._id)
+    const to = mongoose.Types.ObjectId(req.body.to)
 
-    let message: string = req.body.message
+    const message: string = req.body.message
 
     const filter = {
       recipients: {
         $all: [
           { $elemMatch: { $eq: from } },
-          { $elemMatch: { $eq: to } },
+          { $elemMatch: { $eq: to } }
         ]
       }
     }
@@ -39,12 +39,10 @@ const message = async (req: Request, res: Response): Promise<void> => {
       const createdConversation: IConversation = await newConversation.save()
 
       conversationId = createdConversation._id
-    }
-    else if (foundConversation.length !== 1) {
+    } else if (foundConversation.length !== 1) {
       res.status(401).send({ message: 'Multiple users found' })
       return
-    }
-    else {
+    } else {
       conversationId = foundConversation[0]._id
       const filter = { _id: conversationId }
       await Conversation.updateMany(filter, { $set: { lastMessage: message } })

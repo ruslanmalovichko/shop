@@ -19,7 +19,7 @@ const contactForm = async (req: Request, res: Response): Promise<void> => {
       <p>Email: ${req.body.email}</p>
       <h3>Message</h3>
       <p>${req.body.message}</p>
-    `;
+    `
 
     let transporter
 
@@ -37,22 +37,22 @@ const contactForm = async (req: Request, res: Response): Promise<void> => {
           user: MAIL_USER,
           pass: MAIL_PASS
         },
-        tls:{
-          rejectUnauthorized:false
+        tls: {
+          rejectUnauthorized: false
         }
       }
 
-      transporter = nodemailer.createTransport(smtpConfig);
+      transporter = nodemailer.createTransport(smtpConfig)
 
-      let mailOptions = {
+      const mailOptions = {
         from: '"Contact Me" <noreply@example.com>',
         to: 'ruslan.malovichko@wearebrain.com',
         subject: 'Contact Us',
         html: output
-      };
+      }
 
       transporter.sendMail(mailOptions, async (error, info) => {
-        if (error) {
+        if (error != null) {
           res.status(401).send({ message: 'Error with sending email' })
           return
         }
@@ -70,7 +70,6 @@ const contactForm = async (req: Request, res: Response): Promise<void> => {
         await newFormContact.save()
 
         res.status(200).send({ message: 'Email has been sent' })
-        return
       })
     }
     return

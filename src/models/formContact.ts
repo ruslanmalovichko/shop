@@ -6,7 +6,7 @@ const options = { collection: 'formContacts', timestamps: true }
 const formContactSchema: Schema = new Schema(
   {
     messageId: {
-      type: String,
+      type: String
     },
     message: {
       type: String,
