@@ -23,20 +23,20 @@ const checkToken = async (req: Request, res: Response, next: NextFunction): Prom
       return
     }
 
-    const username = jwt.verify(token, PRIVATE_KEY, (err, username) => {
+    const name = jwt.verify(token, PRIVATE_KEY, (err, name) => {
       if (err != null) {
         return null
       } else {
-        return username
+        return name
       }
     })
 
-    if (username == null) {
+    if (name == null) {
       res.status(401).send({ message: 'jwt is not verified' })
       return
     }
 
-    const existingUsers: IUser[] = await User.find({ username })
+    const existingUsers: IUser[] = await User.find({ name })
 
     if (existingUsers.length === 0) {
       res.status(401).send({ message: 'No user found' })

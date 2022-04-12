@@ -36,6 +36,13 @@ curl http://localhost:5000/api/auth/register \
   -d '{"password":"test","name":"ruslan","email":"ruslanmalovichko@gmail.com","address":{"city":"Kyiv","country":"UA","line1":"test"},"phone":"test"}'
 ```
 
+```
+curl http://localhost:5000/api/auth/register \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"password":"test","name":"ruslan2","email":"ruslan.malovichko@wearebrain.com","address":{"city":"Kyiv","country":"UA","line1":"test"},"phone":"test"}'
+```
+
 # Login user
 ```
 curl http://localhost:5000/api/auth/login \
@@ -155,11 +162,28 @@ curl http://localhost:5000/api/order/checkout-session-save?session_id=cs_test_b1
   -H "Content-Type: application/json"
 ```
 
-# API form contact
+# Send form contact
 ```
 curl http://localhost:5000/api/form/contact \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"name":"Ruslan Malovichko","email": "ruslanmalovichko@gmail.com", "message": "Test message"}'
+```
+
+# Send message
+```
+curl http://localhost:5000/api/message \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -d '{"message": "Test message", "to": "62505701f689cf75bd3e1ef3"}'
+```
+
+```
+curl http://localhost:5000/api/message \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM" \
+  -d '{"message": "Test message 2", "to": "625056e5f689cf75bd3e1ef0"}'
 ```
 
