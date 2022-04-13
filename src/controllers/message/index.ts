@@ -1,19 +1,28 @@
 import { Response, Request } from 'express'
 import Conversation from '../../models/conversation'
 import Message from '../../models/message'
+import User from '../../models/user'
 
 import { IUser } from '../../types/user'
 import { IConversation } from '../../types/conversation'
 
-const mongoose = require('mongoose')
-
 const message = async (req: Request, res: Response): Promise<void> => {
   try {
     const user: IUser = res.locals.user
+    const emailTo = req.body.to
 
-    const from = mongoose.Types.ObjectId(user._id)
-    const to = mongoose.Types.ObjectId(req.body.to)
+    const existingUsers: IUser[] = await User.find({ email: emailTo })
 
+    if (existingUsers.length === 0) {
+      res.status(401).send({ message: 'No user found' })
+      return
+    } else if (existingUsers.length !== 1) {
+      res.status(401).send({ message: 'Multiple users found' })
+      return
+    }
+
+    const from = user._id
+    const to = existingUsers[0]._id
     const message: string = req.body.message
 
     const filter = {

@@ -176,7 +176,7 @@ curl http://localhost:5000/api/message \
   -X POST \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
-  -d '{"message": "Test message", "to": "62505701f689cf75bd3e1ef3"}'
+  -d '{"message": "Test message", "to": "ruslan.malovichko@wearebrain.com"}'
 ```
 
 ```
@@ -184,6 +184,6 @@ curl http://localhost:5000/api/message \
   -X POST \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM" \
-  -d '{"message": "Test message 2", "to": "625056e5f689cf75bd3e1ef0"}'
+  -d '{"message": "Test message 2", "to": "ruslanmalovichko@gmail.com"}'
 ```
 
