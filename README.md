@@ -187,3 +187,20 @@ curl http://localhost:5000/api/message \
   -d '{"message": "Test message 2", "to": "ruslanmalovichko@gmail.com"}'
 ```
 
+# Post comment
+```
+curl http://localhost:5000/api/comment \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU" \
+  -d '{"message": "Test message", "product": "Apple iPhone 8 Plus"}'
+```
+
+```
+curl http://localhost:5000/api/comment \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFuMg.kSqL9KVEjiBgFFrAZCIKHfKPbTEyhZxlTiQ29W2OVqM" \
+  -d '{"message": "Test message 2", "product": "Apple iPhone X"}'
+```
+

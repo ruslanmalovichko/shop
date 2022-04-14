@@ -8,6 +8,7 @@ import orderRoutes from './routes/orderRoutes'
 import cartRoutes from './routes/cartRoutes'
 import formRoutes from './routes/formRoutes'
 import messageRoutes from './routes/messageRoutes'
+import commentRoutes from './routes/commentRoutes'
 import 'dotenv/config'
 
 import { connect } from 'mongoose'
@@ -39,6 +40,7 @@ async function run (): Promise<void> {
   app.use('/api/cart', cartRoutes)
   app.use('/api/form', formRoutes)
   app.use('/api/message', messageRoutes)
+  app.use('/api/comment', commentRoutes)
 
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
