@@ -5,7 +5,7 @@ import User from '../../models/user'
 
 import { IUser } from '../../types/user'
 import { IConversation } from '../../types/conversation'
-import {IMessage} from '../../types/message'
+import { IMessage } from '../../types/message'
 
 const message = async (req: Request, res: Response): Promise<void> => {
   try {
