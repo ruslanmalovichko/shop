@@ -187,6 +187,14 @@ curl http://localhost:5000/api/message \
   -d '{"message": "Test message 2", "to": "ruslanmalovichko@gmail.com"}'
 ```
 
+# Get message conversations
+```
+curl http://localhost:5000/api/message/conversations \
+  -X GET \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
+```
+
 # Post comment
 ```
 curl http://localhost:5000/api/comment \

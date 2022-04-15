@@ -49,7 +49,7 @@ const message = async (req: Request, res: Response): Promise<void> => {
 
       conversationId = createdConversation._id
     } else if (foundConversation.length !== 1) {
-      res.status(401).send({ message: 'Multiple users found' })
+      res.status(401).send({ message: 'Multiple conversations found' })
       return
     } else {
       conversationId = foundConversation[0]._id
@@ -74,4 +74,37 @@ const message = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-export { message }
+const conversations = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user: IUser = res.locals.user
+    const from = user._id
+
+    const filter = {
+      recipients: {
+        $all: [
+          { $elemMatch: { $eq: from } }
+        ]
+      }
+    }
+
+    const foundConversation: IConversation[] = await Conversation.find(filter)
+
+    if (foundConversation.length === 0) {
+      res.status(401).send({ message: 'No conversations found' })
+      return
+    } else if (foundConversation.length !== 1) {
+      res.status(401).send({ message: 'Multiple conversations found' })
+      return
+    } else {
+      foundConversation[0]._id
+      res.status(200).send({ conversationId: foundConversation[0]._id })
+      return
+    }
+  } catch (error) {
+    // res.status(500).send({ message: error })
+    console.log(error)
+    throw error
+  }
+}
+
+export { message, conversations }
