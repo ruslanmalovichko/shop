@@ -195,6 +195,14 @@ curl http://localhost:5000/api/message/conversations \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
 ```
 
+# Get messages
+```
+curl http://localhost:5000/api/message/messages?to=ruslan.malovichko@wearebrain.com \
+  -X GET \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.cnVzbGFu.ZWTUSprdW9zn3_4h66c0QxKrNoyzN-YsgOW3x0iJReU"
+```
+
 # Post comment
 ```
 curl http://localhost:5000/api/comment \
